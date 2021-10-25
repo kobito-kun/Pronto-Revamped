@@ -48,7 +48,35 @@ module.exports.deleteRoute = (req, res) => {
 
 module.exports.makeRoute = (req, res) => {
   try{
+    const { title, description, image, price } = req["params"];
+    const newProduct = new Product({
+      title: title,
+      description: description,
+      author: req.userId,
+      image: image,
+      price: price
+    });
+    newProduct.save();
+    return res.status(200).json({"message": "error"});
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
 
+module.exports.editRoute = (req, res) => {
+  try{
+    const { title, description, image, price } = req["body"];
+    Product.find({author: req.userId, '_id': req["params"]["id"]}, (err, result) => {
+      if(err) return res.status(400).json({"message": "error"});
+      else {
+        result["title"] = title;
+        result["description"] = description;
+        result["image"] = image;
+        result["price"] = price;
+        result.save();
+        return res.status(200).json({"message": "success"});
+      }
+    });
   }catch{
     return res.status(400).json({"message": "error"});
   }

@@ -8,11 +8,15 @@ const {
   oneRoute,
   deleteRoute,
   userRoute,
+  makeRoute,
+  editRoute,
 } = require("../controllers/products");
 
 router.get("/one/:id", oneRoute);
 router.get("/user/:id", userRoute);
-router.get("/", auth, mainRoute);
+router.get("/all", auth, mainRoute);
+router.put("/edit/:id", auth, editRoute);
+router.post("/make", auth, makeRoute);
 router.delete("/:id", auth, deleteRoute);
 
 module.exports.productRoutes = router;

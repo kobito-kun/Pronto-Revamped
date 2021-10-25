@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Aileron-Thin
+font link: http://dotcolon.net/font/aileron/
+font author: dot colon
+font author site: http://dotcolon.net/
+
+
+icon designer: Thomas Le Bas
+icon designer link: /tlb
+        
+{"bg":"transparent","icon-gradient-0":"#67635D","icon-gradient-1":"#FFD6AD","font":"#000000","slogan":"#141414"}
+      
