@@ -25,6 +25,43 @@ module.exports.signUp = async (req, res) => {
  } 
 }
 
+module.exports.userInfo = (req, res) => {
+  try{
+    User.findOne({_id: req.userId})
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
+
+module.exports.deleteUser = (req, res) => {
+  try{
+    User.deleteOne({_id: req.userId}, (err, callback) => {
+      if(err) return res.status(400).json(err);
+      else return res.status(200).json({"message": "success", "callback": callback});
+    })
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
+
+module.exports.updateUser = (req, res) => {
+  try{
+    const { username, email, password } = req["body"];
+    User.findOne({_id: req.userId}, async (err, result) => {
+      if(err) return res.status(400).json(err);
+      else {
+        result.username = username;
+        result.email = email;
+        result.password = await generateHashPassword(password);
+        result.save();
+        return res.status(200).json({"message": "success"});
+      }
+    })
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
+
 module.exports.login = (req, res) => {
   try{
     const { email, password } = req["body"];

@@ -17,10 +17,10 @@ const { User } = require("./models/users");
 app.use("/products", productRoutes);
 app.use("/users", userRoutes);
 
-app.get("/testing", (req, res) => {
-  User.deleteMany({}, (err, results) => {
-    return res.json(results);
-  })
+app.get("/testing", async (resq, res) => {
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  console.log(ip.split(',')[0]);
+  return res.send(String(ip.split(',')[0]));
 })
 
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true}, () => console.log("Database Connected"));
