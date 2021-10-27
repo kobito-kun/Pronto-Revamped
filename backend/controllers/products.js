@@ -1,6 +1,7 @@
 const express = require("express");
 
 const { Product } = require("../models/product");
+const { User } = require("../models/users");
 
 module.exports.mainRoute = (req, res) => {
   try{
@@ -15,9 +16,14 @@ module.exports.mainRoute = (req, res) => {
 
 module.exports.userRoute = (req, res) => {
   try{
-    Product.find({author: req["params"]["id"]}, (err, result) => {
+    User.findOne({username: req["params"]["id"]}, (err, result) => {
       if(err) return res.status(400).json(err);
-      else return res.status(200).json(result);
+      else if(result){
+        Product.find({author: result["_id"]}, (err, result) => {
+          if(err) return res.status(400).json(err);
+          else return res.status(200).json(result);
+        })
+      }else return res.status(400).json({"message": "error"});
     })
   }catch{
     return res.status(400).json({"message": "error"});
@@ -48,7 +54,7 @@ module.exports.deleteRoute = (req, res) => {
 
 module.exports.makeRoute = (req, res) => {
   try{
-    const { title, description, image, price } = req["params"];
+    const { title, description, image, price } = req["body"];
     const newProduct = new Product({
       title: title,
       description: description,
@@ -57,7 +63,7 @@ module.exports.makeRoute = (req, res) => {
       price: price
     });
     newProduct.save();
-    return res.status(200).json({"message": "error"});
+    return res.status(200).json(newProduct);
   }catch{
     return res.status(400).json({"message": "error"});
   }
@@ -76,6 +82,17 @@ module.exports.editRoute = (req, res) => {
         result.save();
         return res.status(200).json({"message": "success"});
       }
+    });
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
+
+module.exports.randomRoute = (req, res) => {
+  try{
+    Product.aggregate([{$sample: {size: 10}}], (err, result) => {
+      if(err) return res.status(400).json({"message": "error"});
+      else return res.status(200).json(result);
     });
   }catch{
     return res.status(400).json({"message": "error"});
