@@ -98,3 +98,14 @@ module.exports.randomRoute = (req, res) => {
     return res.status(400).json({"message": "error"});
   }
 }
+
+module.exports.allRoute = (req, res) => {
+  try{
+    Product.find({}, (err, result) => {
+      if(err) return res.status(400).json(err);
+      else return res.status(200).json(result)
+    })
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}

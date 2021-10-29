@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Square from '../../assets/square.png';
 import StackGrid from "react-stack-grid";
+import { fetchAllProducts } from '../../resolver/fetch';
 
 function Products() {
+
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    fetchAllProducts().then(result => setAllProducts(result["data"]));
+  }, [])
+
   return (
     <div className="mt-24 max-w-screen-xl mx-auto">
       <div className="flex justify-center items-center">
@@ -13,18 +21,17 @@ function Products() {
       <StackGrid
         columnWidth={150}
       >
-        <div key="key1" className="h-40 bg-pink-300">Item 1</div>
-        <div key="key2" className="h-20 bg-blue-300">Item 2</div>
-        <div key="key3" className="h-60 bg-red-300">Item 3</div>
-        <div key="key4" className="h-40 bg-pink-300">Item 1</div>
-        <div key="key5" className="h-20 bg-blue-300">Item 2</div>
-        <div key="key6" className="h-60 bg-red-300">Item 3</div>
-        <div key="key7" className="h-40 bg-pink-300">Item 1</div>
-        <div key="key8" className="h-20 bg-blue-300">Item 2</div>
-        <div key="key9" className="h-60 bg-red-300">Item 3</div>
-        <div key="key10" className="h-40 bg-pink-300">Item 1</div>
-        <div key="key11" className="h-20 bg-blue-300">Item 2</div>
-        <div key="key12" className="h-60 bg-red-300">Item 3</div>
+        {
+          allProducts.length > 0
+          ?
+          allProducts.map(item => 
+            <div key={item._id} className="border m-1 bg-white flex justify-center items-center shadow-lg" style={{height: `${Math.floor(Math.random() * (20 - 5) + 5)}rem`}}>
+              <h3 className="truncate font-semibold">{item.title}</h3>
+            </div>
+          )
+          :
+          "Nothing"
+        }
       </StackGrid>
     </div>
   )
