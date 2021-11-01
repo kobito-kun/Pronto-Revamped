@@ -9,3 +9,7 @@ export const fetchRandomProducts = async () => {
 export const fetchAllProducts = async () => {
   return await axios.get(api + "/products/every");
 }
+
+export const login = async (object) => {
+  return await axios.post(api + "/users/login", object);
+}
