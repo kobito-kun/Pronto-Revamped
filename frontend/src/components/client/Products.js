@@ -25,7 +25,7 @@ function Products() {
           allProducts.length > 0
           ?
           allProducts.map(item => 
-            <div key={item._id} className="border m-1 bg-white flex justify-center items-center shadow-lg" style={{height: `${Math.floor(Math.random() * (20 - 5) + 5)}rem`}}>
+            <div key={item._id} className="hover:shadow-2xl duration-300 cursor-pointer border m-1 bg-white flex justify-center items-center shadow-lg" style={{height: `${Math.floor(Math.random() * (20 - 5) + 5)}rem`}}>
               <h3 className="truncate font-semibold">{item.title}</h3>
             </div>
           )

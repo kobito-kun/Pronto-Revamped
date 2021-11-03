@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Block from '../../assets/square.png';
 import { login } from '../../resolver/fetch';
 import { useHistory } from 'react-router-dom';
@@ -19,17 +19,25 @@ function Login() {
       email: emailInput.current.value,
       password: passwordInput.current.value
     }).then(dataResponse => {
-      console.log(dataResponse)
       if(dataResponse.status === 200){
         setResponse("Success!");
         setLoading(false);
+        localStorage.setItem("token", dataResponse["data"]["token"]);
+        localStorage.setItem("loggedIn", true);
         history.push("/dashboard");
-      }else{
-        setResponse("Something went wrong.");
-        setLoading(false);
       }
+    }).catch(err => {
+      setResponse("Something went wrong.");
+      setLoading(false);
     })
   }
+
+  useEffect(() => {
+    if(localStorage.getItem("loggedIn")){
+      history.push("/dashboard")
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <div className="lg:grid-cols-2 grid max-w-screen lg:h-screen overflow-hidden">

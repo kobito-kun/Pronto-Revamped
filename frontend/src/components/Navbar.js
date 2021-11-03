@@ -1,10 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import SquareLogo from '../assets/square.png';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
 
   const [toggled, setToggled] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(localStorage.getItem("loggedIn"));
+  }, [])
 
   return (
     <div className="shadow-lg w-full fixed top-0 left-0 bg-white z-20">
@@ -13,9 +18,18 @@ function Navbar() {
           <img src={SquareLogo} alt="Square Pronto Logo" className="h-12 select-none" />
         </Link>
         <div className="lg:flex lg:gap-4 items-center hidden">
-          <Link to="/products" className="cursor-pointer hover:text-gray-500 duration-300">Products</Link>
+          {loggedIn
+          ?
+          ""
+          :
           <Link to="/login" className="cursor-pointer hover:text-gray-500 duration-300">Login</Link>
+          }
+          {loggedIn
+          ?
+          <Link to="/logout"><button className="hover:bg-white shadow-lg hover:text-black duration-300 bg-black text-white font-bold px-4 py-2">Logout</button></Link>
+          :
           <Link to="/signup"><button className="hover:bg-white shadow-lg hover:text-black duration-300 bg-black text-white font-bold px-4 py-2">Sign Up</button></Link>
+          }
         </div>
         <div onClick={() => setToggled(!toggled)} className="cursor-pointer hover:text-gray-600 duration-300 lg:hidden flex">
           {
@@ -35,15 +49,24 @@ function Navbar() {
         toggled 
         ?
         <div className="w-full">
-          <Link to="/products">
-            <div className="hover:bg-gray-100 cursor-pointer duration-300 text-xl text-center border-b border-t py-4">Products</div>
-          </Link>
+          {loggedIn
+          ?
+          ""
+          :
           <Link to="/login">
             <div className="hover:bg-gray-100 cursor-pointer duration-300 text-xl text-center border-b py-4">Login</div>
           </Link>
+          }
+          {loggedIn
+          ?
+          <Link to="/logout">
+            <div className="hover:bg-gray-100 cursor-pointer duration-300 text-xl text-center border-b py-4">Logout</div>
+          </Link>
+          :
           <Link to="/signup">
             <div className="hover:bg-gray-100 cursor-pointer duration-300 text-xl text-center border-b py-4">Sign Up</div>
           </Link>
+          }
         </div>
         :
         null

@@ -66,14 +66,15 @@ module.exports.login = (req, res) => {
   try{
     const { email, password } = req["body"];
     User.findOne({email: email}, async (err, result) => {
-      if(err) return res.status(400).json(err);
+      if(!result) return res.status(403).json({"message": "invalid credentials"});
+      if(err) return res.status(403).json(err);
       else if(result){
         if(await checkHashPassword(password, result["password"])){
           return res.status(200).json({
-            token: generateAccessToken({id: result["_id"]})
+            token: generateAccessToken({id: result["  _id"]})
           })
         }else{
-          return res.status(400).json({"message": "invalid credentials"})
+          return res.status(403).json({"message": "invalid credentials"})
         }
       }
     })
