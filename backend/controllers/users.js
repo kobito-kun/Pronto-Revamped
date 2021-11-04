@@ -25,6 +25,19 @@ module.exports.signUp = async (req, res) => {
  } 
 }
 
+module.exports.exists = async (req, res) => {
+  try{
+    const { username } = req["params"];
+    User.findOne({username: username}, async (err, result) => {
+      if(err) return res.status(400).json({"message": "error"});
+      else if(!result) return res.status(200).json({"message": false});
+      else return res.status(200).json({"message": true})
+    })
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
+
 module.exports.userInfo = (req, res) => {
   try{
     User.findOne({_id: req.userId})

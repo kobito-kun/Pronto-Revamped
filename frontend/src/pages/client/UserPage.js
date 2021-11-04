@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
+import User from '../../components/client/User';
 import Navbar from '../../components/Navbar'
 
-function UserPage() {
+function UserPage({match}) {
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -18,6 +19,7 @@ function UserPage() {
         :
         ""
       }
+      <User username={match.params.username} />
     </div>
   )
 }

@@ -13,3 +13,7 @@ export const fetchAllProducts = async () => {
 export const login = async (object) => {
   return await axios.post(api + "/users/login", object);
 }
+
+export const checkExists = async (username) => {
+  return await axios.get(api + "/users/" + username);
+}

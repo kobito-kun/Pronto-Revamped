@@ -12,7 +12,7 @@ function Navbar() {
   }, [])
 
   return (
-    <div className="shadow-lg w-full fixed top-0 left-0 bg-white z-20">
+    <div className="shadow-lg w-full fixed top-0 left-0 backdrop-filter backdrop-blur-sm z-20">
       <div className="p-4 max-w-screen-xl mx-auto flex justify-between items-center">
         <Link to="/">
           <img src={SquareLogo} alt="Square Pronto Logo" className="h-12 select-none" />
