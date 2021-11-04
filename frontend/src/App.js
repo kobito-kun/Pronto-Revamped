@@ -8,6 +8,7 @@ import LoginPage from './pages/client/LoginPage';
 import Logout from './pages/client/Logout';
 import DashboardPage from './pages/admin/DashboardPage';
 import UserPage from './pages/client/UserPage';
+import ProductPage from './pages/client/ProductPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/" component={MainPage} />
         <Route exact path="/products" component={ProductsPage} />
         <Route exact path="/@:username" component={UserPage} />
+        <Route exact path="/product/:id" component={ProductPage} />
         <Route exact path="/login" component={LoginPage} />
 
         <Route exact path="/logout" component={Logout} />

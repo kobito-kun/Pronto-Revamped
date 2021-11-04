@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import {Link} from 'react-router-dom';
 // import DefaultCover from '../../assets/default.png';
 
 function Product({product}) {
@@ -9,7 +10,9 @@ function Product({product}) {
       </div>
       <h3 className="text-xl truncate text-primary">{product.title}</h3>
       <p className="text-xs truncate">{product.description}</p>
-      <button className="hover:bg-white shadow-lg hover:text-black duration-300 bg-black w-full mx-auto py-2 text-white">Order Now ${product.price}</button>
+      <Link to={`/product/${product._id}`}>
+        <button className="hover:bg-white shadow-lg hover:text-black duration-300 bg-black w-full mx-auto py-2 text-white">Order Now ${product.price}</button>
+      </Link>
     </div>
   )
 }
