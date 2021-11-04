@@ -20,7 +20,7 @@ function Navbar() {
         <div className="lg:flex lg:gap-4 items-center hidden">
           {loggedIn
           ?
-          ""
+          <Link to="/dashboard" className="cursor-pointer hover:text-gray-500 duration-300">Dashboard</Link>
           :
           <Link to="/login" className="cursor-pointer hover:text-gray-500 duration-300">Login</Link>
           }
@@ -51,7 +51,9 @@ function Navbar() {
         <div className="w-full">
           {loggedIn
           ?
-          ""
+          <Link to="/dashboard">
+            <div className="hover:bg-gray-100 cursor-pointer duration-300 text-xl text-center border-b py-4">Dashboard</div>
+          </Link>
           :
           <Link to="/login">
             <div className="hover:bg-gray-100 cursor-pointer duration-300 text-xl text-center border-b py-4">Login</div>
