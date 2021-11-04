@@ -17,3 +17,7 @@ export const login = async (object) => {
 export const checkExists = async (username) => {
   return await axios.get(api + "/users/" + username);
 }
+
+export const fetchUserProducts = async (username) => {
+  return await axios.get(api + "/products/user/" + username);
+}
