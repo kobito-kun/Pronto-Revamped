@@ -21,3 +21,7 @@ export const checkExists = async (username) => {
 export const fetchUserProducts = async (username) => {
   return await axios.get(api + "/products/user/" + username);
 }
+
+export const fetchProduct = async (id) => {
+  return await axios.get(api + "/products/one/" + id);
+}

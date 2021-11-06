@@ -32,7 +32,7 @@ module.exports.userRoute = (req, res) => {
 
 module.exports.oneRoute = (req, res) => {
   try{
-    Product.find({_id: req["params"]["id"]}, (err, result) => {
+    Product.findOne({_id: req["params"]["id"]}, (err, result) => {
       if(err) return res.status(400).json(err);
       else return res.status(200).json(result);
     })
