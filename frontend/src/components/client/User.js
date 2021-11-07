@@ -3,10 +3,13 @@ import Divider from '../../assets/ah.svg';
 import { checkExists, fetchUserProducts } from '../../resolver/fetch';
 import { useHistory } from 'react-router-dom';
 import Product from './Product';
+import ProductComponent from './ProductComponent';
 
 function User({username}) {
 
   const [userProducts, setUserProducts] = useState([]);
+  const [clickedProduct, setClickedProduct] = useState();
+  const [clicked, setClicked] = useState(false);
   
   const randomBg = [
     "from-blue-400 to-green-500",
@@ -37,6 +40,7 @@ function User({username}) {
 
   return (
     <div>
+      {clicked ? <ProductComponent setClicked={setClicked} clickedProduct={clickedProduct} /> : ""}
       <section style={{"height": "30rem"}} className={`w-full bg-gradient-to-br ${randomBg[Math.floor(Math.random() * (randomBg.length - 0) + 0)]} flex justify-center items-center relative`}>
         <img src={Divider} alt="Epic" className="absolute bottom-0 w-full select-none" />
         <div className="text-white text-center transform scale-150 z-10 select-none">
@@ -48,7 +52,7 @@ function User({username}) {
         {
           userProducts.length > 0
           ?
-          userProducts.map(item => <Product product={item} />)
+          userProducts.map(item => <Product key={item._id} setClickedProduct={setClickedProduct} setClicked={setClicked} product={item} />)
           :
           "Loading.... Or Nothing."
         }

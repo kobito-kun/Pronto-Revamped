@@ -25,3 +25,7 @@ export const fetchUserProducts = async (username) => {
 export const fetchProduct = async (id) => {
   return await axios.get(api + "/products/one/" + id);
 }
+
+export const createOrder = async (object) => {
+  return await axios.post(api + "/orders/create/", object);
+}
