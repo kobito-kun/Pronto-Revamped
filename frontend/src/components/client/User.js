@@ -40,7 +40,7 @@ function User({username}) {
 
   return (
     <div>
-      {clicked ? <ProductComponent setClicked={setClicked} clickedProduct={clickedProduct} /> : ""}
+      {clicked ? <ProductComponent setClickedOuter={setClicked} clickedProduct={clickedProduct} /> : ""}
       <section style={{"height": "30rem"}} className={`w-full bg-gradient-to-br ${randomBg[Math.floor(Math.random() * (randomBg.length - 0) + 0)]} flex justify-center items-center relative`}>
         <img src={Divider} alt="Epic" className="absolute bottom-0 w-full select-none" />
         <div className="text-white text-center transform scale-150 z-10 select-none">

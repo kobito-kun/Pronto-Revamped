@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { fetchProduct } from '../../resolver/fetch';
 
-function ProductComponent({clickedProduct}) {
+function ProductComponent({setClickedOuter, clickedProduct}) {
 
   const [product, setProduct] = useState();
   const [total, setTotal] = useState(0);
@@ -12,7 +12,7 @@ function ProductComponent({clickedProduct}) {
   useEffect(() => {
 
     fetchProduct(clickedProduct).then(result => {
-      console.log(result)
+      // console.log(result)
       setProduct(result["data"]);
       setTotal(result["data"]["price"]);
     }).catch(err => {
@@ -36,7 +36,7 @@ function ProductComponent({clickedProduct}) {
 
   return (
     <div className="fixed min-h-screen w-screen bg-black z-20 bg-opacity-50 flex justify-center">
-      <svg xmlns="http://www.w3.org/2000/svg" className="text-white absolute top-2 right-5 h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg onClick={() => setClickedOuter(false)} xmlns="http://www.w3.org/2000/svg" className="cursor-pointer text-white absolute top-2 right-5 h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
       </svg>
       <div className="bg-white lg:w-96 p-2 rounded shadow-lg my-20 h-full">
