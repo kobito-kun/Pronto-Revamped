@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { fetchProduct } from '../../resolver/fetch';
+import { fetchProduct, createOrder } from '../../resolver/fetch';
 
 function ProductComponent({setClickedOuter, clickedProduct}) {
 
@@ -25,13 +25,17 @@ function ProductComponent({setClickedOuter, clickedProduct}) {
     setTotal(product["price"] * quantityElement.current.value);
   }
 
-  const createOrder = () => {
+  const createOrderFunction = () => {
     setClicked(true);
     const object = {
-      product_id: product["_id"],
+      product: product["_id"],
       quantity: quantityElement.current.value,
+      address: "Dummy stuff",
+      email: "ito.kobilol@gmail.com"
     };
-    console.log(object)
+    createOrder(object).then(result => {
+      console.log(result);
+    })
   }
 
   return (
@@ -47,7 +51,7 @@ function ProductComponent({setClickedOuter, clickedProduct}) {
             <h3 className="text-xl text-center font-semibold">{product["title"]}</h3>
             <p className="">{product["description"]}</p>
             <input min="1" defaultValue="1" onChange={onQuantityChange} ref={quantityElement} type="number" className="outline-none border py-2 px-4" placeholder="Quantity" />
-            <button onClick={() => createOrder()} className="bg-black px-4 py-2 text-white flex justify-center items-center">
+            <button onClick={() => createOrderFunction()} className="bg-black px-4 py-2 text-white flex justify-center items-center">
               {clicked
                 ?
                 <svg xmlns="http://www.w3.org/2000/svg" className="animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

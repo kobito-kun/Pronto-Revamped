@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
   total: Number,
-  products: String,
+  product: String,
   address: String,
   paid: Boolean,
   email: String,
+  quantity: Number,
   date: {
     type: Date,
     default: Date.now
