@@ -1,14 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {allOrders} from '../../resolver/fetch';
+import {allOrders, allProducts} from '../../resolver/fetch';
 
 
 function Dashboard() {
 
   const [orders, setOrders] = useState([]);
+  const [totalMade, setTotalMade] = useState(0);
+  const [allProductsArr, setAllProducts] = useState([]);
 
   useEffect(() => {
-    allOrders().then(result => setOrders(result["data"]));
+    allOrders().then(result => {
+      setOrders(result["data"])
+      let total = 0;
+      result["data"].forEach(item => {
+        total += item.total
+      })
+      setTotalMade(total);
+    });
+    allProducts().then(result => {
+      setAllProducts(result["data"]);
+    })
   }, [])
 
   return (
@@ -31,8 +43,8 @@ function Dashboard() {
                     </div>
 
                     <div className="mx-5">
-                        <h4 className="text-2xl font-semibold text-gray-700">8,282</h4>
-                        <div className="text-gray-500">New Users</div>
+                        <h4 className="text-2xl font-semibold text-gray-700">${totalMade}</h4>
+                        <div className="text-gray-500">Total Profit</div>
                     </div>
                 </div>
             </div>
@@ -48,7 +60,7 @@ function Dashboard() {
                     </div>
 
                     <div className="mx-5">
-                        <h4 className="text-2xl font-semibold text-gray-700">200,521</h4>
+                        <h4 className="text-2xl font-semibold text-gray-700">{orders.length}</h4>
                         <div className="text-gray-500">Total Orders</div>
                     </div>
                 </div>
@@ -64,7 +76,7 @@ function Dashboard() {
                     </div>
 
                     <div className="mx-5">
-                        <h4 className="text-2xl font-semibold text-gray-700">215,542</h4>
+                        <h4 className="text-2xl font-semibold text-gray-700">{allProductsArr.length}</h4>
                         <div className="text-gray-500">Available Products</div>
                     </div>
                 </div>
@@ -82,10 +94,10 @@ function Dashboard() {
                 <table className="min-w-full">
                     <thead>
                         <tr>
-                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Paid</th>
+                            <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Date</th>
                             <th className="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
                         </tr>
                     </thead>
@@ -93,33 +105,32 @@ function Dashboard() {
                     <tbody className="bg-white">
                         {orders.length > 0 ?
                           orders.map(item => (
-                            <tr>
+                            <tr key={item["_id"]}>
                                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <div className="flex items-center">
-                                        <div className="flex-shrink-0 h-10 w-10">
-                                            <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                                        <div className="flex-shrink-0 rounded-full h-10 w-10 bg-blue-300">
                                         </div>
 
                                         <div className="ml-4">
-                                            <div className="text-sm leading-5 font-medium text-gray-900">John Doe</div>
-                                            <div className="text-sm leading-5 text-gray-500">john@example.com</div>
+                                            <div className="text-sm leading-5 font-medium text-gray-900">{item["product"]}</div>
+                                            <div className="text-sm leading-5 text-gray-500">{item["_id"]}</div>
                                         </div>
                                     </div>
                                 </td>
                                 
                                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <div className="text-sm leading-5 text-gray-900">Software Engineer</div>
-                                    <div className="text-sm leading-5 text-gray-500">Web dev</div>
+                                    <div className="text-sm leading-5 text-gray-900">${item["total"] ? item["total"] : "0"}</div>
+                                    <div className="text-sm leading-5 text-gray-500">{item["quantity"]}</div>
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 uppercase">{JSON.stringify(item["paid"])}</span>
                                 </td>
 
-                                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">Owner</td>
+                                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">{item["date"]}</td>
 
                                 <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                    <Link to="#" className="text-indigo-600 hover:text-indigo-900">Edit</Link>
+                                    <Link to="#" className="text-indigo-600 hover:text-indigo-900">View</Link>
                                 </td>
                             </tr>
                           ))

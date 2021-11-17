@@ -33,3 +33,7 @@ export const createOrder = async (object) => {
 export const allOrders = async () => {
   return await axios.get(api + "/orders/all", { headers : { 'Authorization': `Bearer ${localStorage.getItem("token")}` } })
 }
+
+export const allProducts = async () => {
+  return await axios.get(api + "/products/all", { headers : { 'Authorization': `Bearer ${localStorage.getItem("token")}` } })
+}
