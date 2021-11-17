@@ -9,6 +9,7 @@ import Logout from './pages/client/Logout';
 import DashboardPage from './pages/admin/DashboardPage';
 import UserPage from './pages/client/UserPage';
 import ProductPage from './pages/client/ProductPage';
+import SuccessPage from './pages/client/SuccessPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
 
         <Route exact path="/dashboard" component={DashboardPage} />
 
+        <Route exact path="/success" component={SuccessPage} />
         <Route path="*" component={ErrorPage} />
       </Switch>
     </Router>

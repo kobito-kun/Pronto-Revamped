@@ -29,3 +29,7 @@ export const fetchProduct = async (id) => {
 export const createOrder = async (object) => {
   return await axios.post(api + "/orders/create/", object);
 }
+
+export const allOrders = async () => {
+  return await axios.get(api + "/orders/all", { headers : { 'Authorization': `Bearer ${localStorage.getItem("token")}` } })
+}

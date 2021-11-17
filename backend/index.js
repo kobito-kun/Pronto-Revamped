@@ -25,7 +25,7 @@ app.get("/testing", async (resq, res) => {
   // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   // return res.send(String(ip))
 
-  Product.deleteMany({}, (err, results) => {
+  User.find({}, (err, results) => {
     return res.json(results);
   })
 })

@@ -84,7 +84,7 @@ module.exports.login = (req, res) => {
       else if(result){
         if(await checkHashPassword(password, result["password"])){
           return res.status(200).json({
-            token: generateAccessToken({id: result["  _id"]})
+            token: generateAccessToken({id: result["_id"]})
           })
         }else{
           return res.status(403).json({"message": "invalid credentials"})

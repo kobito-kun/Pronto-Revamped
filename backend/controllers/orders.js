@@ -4,7 +4,7 @@ const { Order } = require("../models/orders");
 const { Product } = require("../models/product");
 
 module.exports.createOrder = (req, res) => {
-  // try{
+  try{
 
     const { product, address, email, quantity } = req["body"];
 
@@ -19,14 +19,24 @@ module.exports.createOrder = (req, res) => {
           paid: false,
           email: email,
           quantity: quantity,
+          creator: result["author"],
         })
         newOrder.save();
         return res.status(200).json(newOrder);
       }
     })
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
+}
 
-
-  // }catch{
-  //   return res.status(400).json({"message": "error"});
-  // }
+module.exports.allOrders = (req, res) => {
+  try{
+    Order.find({creator: req["userId"]}, (err, result) => {
+      if(err) return res.status(400).json(err);
+      return res.status(200).json(result)
+    })
+  }catch{
+    return res.status(400).json({"message": "error"});
+  }
 }

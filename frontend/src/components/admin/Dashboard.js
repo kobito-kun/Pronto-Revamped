@@ -1,7 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {allOrders} from '../../resolver/fetch';
+
 
 function Dashboard() {
+
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    allOrders().then(result => setOrders(result["data"]));
+  }, [])
+
   return (
     <div className="mt-24 max-w-screen-xl mx-auto p-4">
     <h3 className="text-gray-700 text-3xl font-medium">Dashboard</h3>
@@ -82,35 +91,41 @@ function Dashboard() {
                     </thead>
 
                     <tbody className="bg-white">
-                        <tr>
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <div className="flex items-center">
-                                    <div className="flex-shrink-0 h-10 w-10">
-                                        <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                        {orders.length > 0 ?
+                          orders.map(item => (
+                            <tr>
+                                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0 h-10 w-10">
+                                            <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                                        </div>
+
+                                        <div className="ml-4">
+                                            <div className="text-sm leading-5 font-medium text-gray-900">John Doe</div>
+                                            <div className="text-sm leading-5 text-gray-500">john@example.com</div>
+                                        </div>
                                     </div>
+                                </td>
+                                
+                                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div className="text-sm leading-5 text-gray-900">Software Engineer</div>
+                                    <div className="text-sm leading-5 text-gray-500">Web dev</div>
+                                </td>
 
-                                    <div className="ml-4">
-                                        <div className="text-sm leading-5 font-medium text-gray-900">John Doe</div>
-                                        <div className="text-sm leading-5 text-gray-500">john@example.com</div>
-                                    </div>
-                                </div>
-                            </td>
-                            
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <div className="text-sm leading-5 text-gray-900">Software Engineer</div>
-                                <div className="text-sm leading-5 text-gray-500">Web dev</div>
-                            </td>
+                                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
 
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                            </td>
+                                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">Owner</td>
 
-                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">Owner</td>
-
-                            <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                <Link to="#" className="text-indigo-600 hover:text-indigo-900">Edit</Link>
-                            </td>
-                        </tr>
+                                <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
+                                    <Link to="#" className="text-indigo-600 hover:text-indigo-900">Edit</Link>
+                                </td>
+                            </tr>
+                          ))
+                          :
+                          ""
+                        }
                     </tbody>
                 </table>
             </div>

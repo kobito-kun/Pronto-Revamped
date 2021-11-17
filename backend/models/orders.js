@@ -8,6 +8,7 @@ const orderSchema = new Schema({
   paid: Boolean,
   email: String,
   quantity: Number,
+  creator: String,
   date: {
     type: Date,
     default: Date.now
