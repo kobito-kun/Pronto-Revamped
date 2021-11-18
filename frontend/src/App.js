@@ -10,6 +10,7 @@ import DashboardPage from './pages/admin/DashboardPage';
 import UserPage from './pages/client/UserPage';
 import ProductPage from './pages/client/ProductPage';
 import SuccessPage from './pages/client/SuccessPage';
+import SignUpPage from './pages/client/SignUpPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/@:username" component={UserPage} />
         <Route exact path="/product/:id" component={ProductPage} />
         <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/signup" component={SignUpPage} />
 
         <Route exact path="/logout" component={Logout} />
 

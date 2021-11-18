@@ -14,6 +14,10 @@ export const login = async (object) => {
   return await axios.post(api + "/users/login", object);
 }
 
+export const signup = async (object) => {
+  return await axios.post(api + "/users/signup", object);
+}
+
 export const checkExists = async (username) => {
   return await axios.get(api + "/users/" + username);
 }
